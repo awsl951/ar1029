@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>签名墙查看</title>
+    <title>拖动放大矢量图</title>
     <style>
         /* 确保图像可以自适应屏幕大小 */
-
+        /* #container {
+            width: 100%;
+            height: 100vh;
+            overflow: scroll;
+            position: relative;
+        } */
         #vector-image {
             width: 100%;
             height: 100vh;
@@ -16,9 +21,10 @@
     </style>
 </head>
 <body>
-
+    <!-- <div id="container"> -->
         <!-- 替换下面的 "https://awsl951.oss-cn-hangzhou.aliyuncs.com/imag1/animal-2069713.svg" 为您自己的矢量图路径 -->
         <img id="vector-image" src="https://awsl951.oss-cn-hangzhou.aliyuncs.com/imag1/animal-2069713.svg" alt="Vector Image">
+    <!-- </div> -->
 
     <script>
         let image = document.getElementById("vector-image");
