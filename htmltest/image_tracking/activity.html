@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>签到墙</title>
+    <title>签名墙查看</title>
     <style>
-        /* 确保图像可以自适应屏幕大小 */
-        /* #container {
+        #container {
             width: 100%;
             height: 100vh;
             overflow: scroll;
             position: relative;
-        } */
+        }
         #vector-image {
             width: 100%;
-            height: 100vh;
             cursor: grab;
             touch-action: pan-y;
         }
     </style>
 </head>
 <body>
-    <!-- <div id="container"> -->
-        <!-- 替换下面的 "https://awsl951.oss-cn-hangzhou.aliyuncs.com/imag1/animal-2069713.svg" 为您自己的矢量图路径 -->
+    <div id="container">
         <img id="vector-image" src="https://awsl951.oss-cn-hangzhou.aliyuncs.com/imag1/animal-2069713.svg" alt="Vector Image">
-    <!-- </div> -->
+    </div>
 
     <script>
         let image = document.getElementById("vector-image");
@@ -54,8 +51,11 @@
             let deltaX = currentX - startX;
             let deltaY = currentY - startY;
 
-            container.scrollLeft = startScrollX - deltaX;
-            container.scrollTop = startScrollY - deltaY;
+            // 确保图像拖动时不会超出容器的边界
+            let newScrollX = startScrollX - deltaX;
+            let newScrollY = startScrollY - deltaY;
+            container.scrollLeft = Math.max(0, Math.min(container.scrollWidth - container.clientWidth, newScrollX));
+            container.scrollTop = Math.max(0, Math.min(container.scrollHeight - container.clientHeight, newScrollY));
         }
 
         function endDrag(event) {
