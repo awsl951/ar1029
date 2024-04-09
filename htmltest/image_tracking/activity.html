@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>签名墙查看11</title>
+    <title>拖动放大矢量图</title>
     <style>
         #container {
             width: 100%;
@@ -16,16 +16,29 @@
             cursor: grab;
             touch-action: pan-y;
         }
+        .dragging {
+            background-color: #cceeff; /* 蓝色背景 */
+        }
+        .dragging p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
     <div id="container">
         <img id="vector-image" src="https://awsl951.oss-cn-hangzhou.aliyuncs.com/imag1/animal-2069713.svg" alt="Vector Image">
+        <p id="dragging-text"></p>
     </div>
 
     <script>
         let image = document.getElementById("vector-image");
         let container = document.getElementById("container");
+        let draggingText = document.getElementById("dragging-text");
         let isDragging = false;
         let startX, startY, startScrollX, startScrollY;
 
@@ -40,6 +53,10 @@
             startY = event.touches[0].clientY;
             startScrollX = container.scrollLeft;
             startScrollY = container.scrollTop;
+
+            // 添加正在拖动的样式，并显示提示文字
+            container.classList.add("dragging");
+            draggingText.textContent = "正在拖动...";
         }
 
         function drag(event) {
@@ -56,11 +73,19 @@
             let newScrollY = startScrollY - deltaY;
             container.scrollLeft = Math.max(0, Math.min(container.scrollWidth - container.clientWidth, newScrollX));
             container.scrollTop = Math.max(0, Math.min(container.scrollHeight - container.clientHeight, newScrollY));
+
+            // 更新拖动起始点的位置
+            startX = currentX;
+            startY = currentY;
         }
 
         function endDrag(event) {
             event.preventDefault();
             isDragging = false;
+
+            // 移除正在拖动的样式，并隐藏提示文字
+            container.classList.remove("dragging");
+            draggingText.textContent = "";
         }
     </script>
 </body>
